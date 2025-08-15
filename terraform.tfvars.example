@@ -1,0 +1,72 @@
+# IBM Cloud API Key (Required)
+# Get your API key from: https://cloud.ibm.com/iam/apikeys
+ibmcloud_api_key = "your-ibm-cloud-api-key-here"
+
+# IBM Cloud Region
+# Available regions: us-south, us-east, eu-gb, eu-de, jp-tok, au-syd, jp-osa, br-sao, ca-tor, eu-es, eu-fr2
+region = "us-south"
+
+# Resource Group
+# Use "default" or specify your resource group name
+resource_group_name = "default"
+
+# Cluster Configuration
+cluster_name = "llm-d-cluster"
+
+# Zones for high availability (adjust based on your region)
+# US-South zones
+zones = ["us-south-1", "us-south-2", "us-south-3"]
+
+# EU-GB zones (uncomment if using eu-gb region)
+# zones = ["eu-gb-1", "eu-gb-2", "eu-gb-3"]
+
+# Worker Node Configuration
+# bx2.4x16 provides 4 vCPUs and 16GB RAM per node
+worker_flavor = "bx2.4x16"
+
+# Number of worker nodes per zone (total nodes = worker_count_per_zone * number of zones)
+# For 3 total nodes across 3 zones, use 1 worker per zone
+worker_count_per_zone = 1
+
+# Kubernetes Version
+kubernetes_version = "1.28"
+
+# LLM-D Configuration
+llm_d_namespace = "llm-d"
+
+# Hugging Face Token (Optional but recommended)
+# Get your token from: https://huggingface.co/settings/tokens
+# huggingface_token = "your-huggingface-token-here"
+
+# Additional Settings
+enable_logging = true
+enable_monitoring = true
+
+# Additional tags
+tags = ["terraform", "llm-d", "ai-infrastructure"]
+
+# Model Configuration
+# Default model to deploy (IBM Granite model is the default)
+default_model = "ibm-granite/granite-3.3-8b-instruct"
+
+# Model parameters (optional - defaults are provided)
+# model_config = {
+#   max_tokens         = 4096
+#   temperature        = 0.7
+#   top_p             = 0.9
+#   repetition_penalty = 1.1
+# }
+
+# Service Mesh and Gateway Configuration
+# Enable Istio service mesh (recommended for production)
+enable_istio = true
+
+# Istio version to install
+istio_version = "1.24.1"
+
+# Enable Kubernetes Gateway API (alternative to Istio ingress)
+enable_kgateway = false
+
+# Container registry to use (helps with image pull issues)
+# Options: docker.io, icr.io, quay.io, ghcr.io
+container_registry = "icr.io"

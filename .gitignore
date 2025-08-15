@@ -1,0 +1,197 @@
+# =============================================================================
+# Terraform Infrastructure Files
+# =============================================================================
+
+# Terraform state files (contain sensitive data)
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Terraform variable files (contain secrets like API keys)
+*.tfvars
+!*.tfvars.example
+
+# Terraform working directories and cache
+.terraform/
+.terraform.lock.hcl
+
+# Terraform plan files
+terraform.tfplan
+terraform.tfplan.json
+*.tfplan
+*tfplan*
+
+# =============================================================================
+# System and Application Files  
+# =============================================================================
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Auto-generated Terraform files
+*.auto.tfvars
+*.auto.tfvars.json
+
+# Override files (local resource overrides)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# =============================================================================
+# Development Environment Files
+# =============================================================================
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.vimrc
+.nvimrc
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+log/
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# =============================================================================
+# IBM Cloud and Kubernetes Files
+# =============================================================================
+
+# IBM Cloud CLI and configuration
+.bluemix/
+.ic/
+ibmcloud-cli/
+.ibmcloud/
+
+# Kubernetes configuration files (contain cluster credentials)
+kubeconfig*
+*.kubeconfig
+kube_config_*
+cluster-config*
+kubectl-cache/
+.kube/
+
+# =============================================================================
+# Security and Sensitive Data
+# =============================================================================
+
+# API Keys and Tokens
+hf_token.txt
+api_key.txt
+ibm_api_key.txt
+huggingface_token.txt
+
+# Certificate and Key files
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+ca.crt
+tls.crt
+tls.key
+
+# SSH keys
+id_rsa*
+id_ed25519*
+*.pub
+.ssh/
+
+# Kubernetes secrets and sensitive manifests
+secrets.yaml
+*secret*.yaml
+*-secret.yaml
+
+# Environment files (may contain secrets)
+.env
+.env.local
+.env.production
+.env.staging
+.env.*
+
+# =============================================================================
+# LLM-D Project Specific Files
+# =============================================================================
+
+# Temporary deployment files created during debugging
+llm-d-config.yaml
+model-override.yaml
+llm-d-installer-script.sh
+manual-llm-d-install.yaml
+simple-llm-d-deployment.yaml
+
+# Local script outputs and status files
+cluster-info.txt
+deployment-status.txt
+verify-output.txt
+kubectl-output.txt
+terraform-output.txt
+
+# Downloaded Helm charts and packages
+charts/
+helm-charts/
+istio-*/
+*.tgz
+*.tar.gz
+
+# Model files and data (if downloaded locally)
+models/
+model-cache/
+*.bin
+*.safetensors
+*.gguf
+
+# =============================================================================
+# Backup and Archive Files
+# =============================================================================
+
+# Backup files
+*.backup
+*.bak
+*.orig
+*~backup
+*.old
+
+# Archive files
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+
+# =============================================================================
+# Development and Local Files
+# =============================================================================
+
+# Local development overrides
+.devcontainer/
+docker-compose.override.yml
+.local/
+local/
+
+# Test and experiment files
+test-*.yaml
+experiment-*.tf
+scratch.*
+notes.md
+TODO.md
