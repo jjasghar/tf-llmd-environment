@@ -13,7 +13,7 @@ data "ibm_resource_group" "resource_group" {
 
 # Create VPC
 resource "ibm_is_vpc" "llm_d_vpc" {
-  name                      = "${var.cluster_name}-vpc"
+  name                      = "${var.cluster_name}-vpc-${formatdate("YYYYMMDD-hhmm", timestamp())}"
   resource_group            = data.ibm_resource_group.resource_group.id
   address_prefix_management = "auto"
 
@@ -103,7 +103,7 @@ resource "ibm_is_security_group_rule" "allow_inbound_dns" {
 
 # Create Kubernetes cluster
 resource "ibm_container_vpc_cluster" "llm_d_cluster" {
-  name                         = var.cluster_name
+  name                         = "${var.cluster_name}-${formatdate("YYYYMMDD-hhmm", timestamp())}"
   vpc_id                       = ibm_is_vpc.llm_d_vpc.id
   flavor                       = var.worker_flavor
   worker_count                 = var.worker_count_per_zone
@@ -167,22 +167,7 @@ data "ibm_container_cluster_config" "cluster_config" {
 # Note: Using default namespace to avoid RBAC permission issues
 # The default namespace is automatically available and doesn't require creation
 
-# Create secret for Hugging Face token (if provided)
-resource "kubernetes_secret" "huggingface_token" {
-  count      = var.huggingface_token != "" ? 1 : 0
-  depends_on = [time_sleep.wait_for_cluster]
-  
-  metadata {
-    name      = "huggingface-token"
-    namespace = "default"  # Using default namespace to avoid RBAC issues
-  }
-
-  data = {
-    token = var.huggingface_token
-  }
-
-  type = "Opaque"
-}
+# Note: HuggingFace token secret is created in llm-d-deployment.tf
 
 # Create ConfigMap for LLM-D model configuration
 resource "kubernetes_config_map" "llm_d_model_config" {

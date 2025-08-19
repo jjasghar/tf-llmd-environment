@@ -42,13 +42,14 @@ variable "zones" {
 }
 
 variable "worker_flavor" {
-  description = "Flavor (size) of worker nodes. bx2.16x64 provides 16 vCPUs and 64GB RAM - optimized for IBM Granite model"
+  description = "Flavor (size) of worker nodes. bx3d.32x160 provides 32 vCPUs and 160GB RAM - optimized for AI workloads"
   type        = string
-  default     = "bx2.16x64"
+  default     = "bx3d.32x160"
   
   validation {
     condition = contains([
       "bx2.2x8", "bx2.4x16", "bx2.8x32", "bx2.16x64", "bx2.32x128",
+      "bx3d.4x20", "bx3d.8x40", "bx3d.16x80", "bx3d.24x120", "bx3d.32x160", "bx3d.48x240", "bx3d.64x320",
       "cx2.2x4", "cx2.4x8", "cx2.8x16", "cx2.16x32", "cx2.32x64",
       "mx2.2x16", "mx2.4x32", "mx2.8x64", "mx2.16x128", "mx2.32x256"
     ], var.worker_flavor)
@@ -83,7 +84,7 @@ variable "kubernetes_version" {
 variable "llm_d_namespace" {
   description = "Kubernetes namespace for LLM-D deployment"
   type        = string
-  default     = "llm-d"  # Dedicated namespace for LLM-D
+  default     = "llm-d-inference-scheduling"  # Official LLM-D inference scheduling namespace
   
   validation {
     condition     = can(regex("^[a-z0-9-]+$", var.llm_d_namespace))
@@ -92,10 +93,14 @@ variable "llm_d_namespace" {
 }
 
 variable "huggingface_token" {
-  description = "Hugging Face token for model access (optional)"
+  description = "Hugging Face token for model access (REQUIRED for IBM Granite models)"
   type        = string
-  default     = ""
   sensitive   = true
+  
+  validation {
+    condition     = length(var.huggingface_token) > 0
+    error_message = "HF_TOKEN is required. Get your token from: https://huggingface.co/settings/tokens"
+  }
 }
 
 variable "enable_logging" {

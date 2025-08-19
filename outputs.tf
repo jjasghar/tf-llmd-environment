@@ -37,7 +37,7 @@ output "public_gateway_ids" {
 
 output "llm_d_namespace" {
   description = "Kubernetes namespace for LLM-D deployment"
-  value       = "default"  # Using default namespace to avoid RBAC issues
+  value       = var.llm_d_namespace
 }
 
 output "kubectl_config_command" {
@@ -48,14 +48,18 @@ output "kubectl_config_command" {
 output "cluster_info" {
   description = "Summary of cluster information"
   value = {
-    name             = ibm_container_vpc_cluster.llm_d_cluster.name
-    id               = ibm_container_vpc_cluster.llm_d_cluster.id
-    region           = var.region
-    worker_flavor    = var.worker_flavor
-    total_nodes      = var.worker_count_per_zone * length(var.zones)
+    name               = ibm_container_vpc_cluster.llm_d_cluster.name
+    id                 = ibm_container_vpc_cluster.llm_d_cluster.id
+    region             = var.region
+    worker_flavor      = var.worker_flavor
+    total_nodes        = var.worker_count_per_zone * length(var.zones)
+    total_vcpus        = var.worker_count_per_zone * length(var.zones) * (var.worker_flavor == "bx3d.32x160" ? 32 : 16)
+    total_memory_gb    = var.worker_count_per_zone * length(var.zones) * (var.worker_flavor == "bx3d.32x160" ? 160 : 64)
     kubernetes_version = var.kubernetes_version
-    llm_d_namespace  = "default"  # Using default namespace to avoid RBAC issues
-    default_model    = var.default_model
+    llm_d_namespace    = var.llm_d_namespace
+    default_model      = var.default_model
+    high_performance   = contains(["bx3d.32x160", "bx3d.48x240", "bx3d.64x320"], var.worker_flavor)
+    post_install_cmd   = "export HF_TOKEN=your_token && ./scripts/install-llm-d.sh"
   }
 }
 

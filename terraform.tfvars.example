@@ -21,8 +21,8 @@ zones = ["us-south-1", "us-south-2", "us-south-3"]
 # zones = ["eu-gb-1", "eu-gb-2", "eu-gb-3"]
 
 # Worker Node Configuration
-# bx2.16x64 provides 16 vCPUs and 64GB RAM per node - optimized for IBM Granite model
-worker_flavor = "bx2.16x64"
+# bx3d.32x160 provides 32 vCPUs and 160GB RAM per node - optimized for AI workloads
+worker_flavor = "bx3d.32x160"
 
 # Number of worker nodes per zone (total nodes = worker_count_per_zone * number of zones)
 # For 3 total nodes across 3 zones, use 1 worker per zone
@@ -34,9 +34,9 @@ kubernetes_version = "1.28"
 # LLM-D Configuration
 llm_d_namespace = "llm-d"
 
-# Hugging Face Token (Optional but recommended)
+# Hugging Face Token (REQUIRED for IBM Granite models)
 # Get your token from: https://huggingface.co/settings/tokens
-# huggingface_token = "your-huggingface-token-here"
+huggingface_token = "your-huggingface-token-here"
 
 # Additional Settings
 enable_logging = true
